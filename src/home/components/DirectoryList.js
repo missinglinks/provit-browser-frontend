@@ -2,9 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
 import Grid from '@material-ui/core/Grid'
-import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
-import Typography from '@material-ui/core/Typography'
 import Fab from '@material-ui/core/Fab'
 import DeleteIcon from '@material-ui/icons/Delete'
 import { withStyles } from '@material-ui/core/styles'
@@ -27,7 +25,7 @@ class DirectoryList extends Component {
     } 
 
     render () {
-        const { directories, classes, removeDirectory } = this.props
+        const { directories, classes } = this.props
         return (
             <Grid container className={ classes.directoryList }>
                 { directories.map( (item, i) => (

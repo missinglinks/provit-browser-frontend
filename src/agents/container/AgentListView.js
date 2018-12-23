@@ -4,10 +4,12 @@ import * as api from '../api'
 
 import PersonAgentList from '../components/PersonAgentList'
 import SoftwareAgentList from '../components/SoftwareAgentList'
+import OrganizationAgentList from '../components/OrganizationAgentList'
 
 const mapStateToProps = (state) => ({
     persons: state.agents.persons,
-    software: state.agents.software
+    software: state.agents.software,
+    organizations: state.agents.organizations
 })
 
 const mapDispatchToProps = {
@@ -24,6 +26,7 @@ class AgentListView extends Component {
             <div>
                 <PersonAgentList persons={ this.props.persons } />
                 <SoftwareAgentList software={ this.props.software } />
+                <OrganizationAgentList organizations={ this.props.organizations } />
             </div>
         )
     }

@@ -1,6 +1,7 @@
 const initialState = {
     persons: [],
     software: [],
+    organizations: [],
     loading: false,
     error: null
 }
@@ -19,7 +20,8 @@ const AgentsReducer = (state=initialState, action) => {
                 loading: false,
                 error: null,
                 persons: action.payload.agents.person,
-                software: action.payload.agents.software
+                software: action.payload.agents.software,
+                organizations: action.payload.agents.organization
             }
         case 'FETCH_AGENTS_ERROR':
             return {

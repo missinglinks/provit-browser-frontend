@@ -27,7 +27,7 @@ class DirectoryView extends Component {
     componentDidUpdate () {
         // fetch file list if location search path is changed
         const directory = this.props.location.search.substr(1)
-        if (directory != this.props.currentDirectory) {
+        if (directory !== this.props.currentDirectory) {
             this.props.fetchFileList(directory)
             this.props.changeCurrentDirectory(directory)        
         }
