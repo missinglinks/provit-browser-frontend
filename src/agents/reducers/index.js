@@ -19,9 +19,9 @@ const AgentsReducer = (state=initialState, action) => {
                 ...state,
                 loading: false,
                 error: null,
-                persons: action.payload.agents.person,
-                software: action.payload.agents.software,
-                organizations: action.payload.agents.organization
+                persons: action.payload.agents.Person,
+                software: action.payload.agents.Software,
+                organizations: action.payload.agents.Organization
             }
         case 'FETCH_AGENTS_ERROR':
             return {

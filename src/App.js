@@ -11,6 +11,7 @@ import ConfigView from './config/container/ConfigView'
 import HomeView from './home/container/HomeView'
 import DirectoryView from './directory/container/DirectoryView'
 import AgentListView from './agents/container/AgentListView'
+import FileView from './file/container/FileView'
 
 class App extends Component {
   render() {
@@ -32,6 +33,7 @@ class App extends Component {
               <Route path="/config" component={ ConfigView } />
               <Route path="/directory" component={ DirectoryView } />
               <Route path="/agents" component={ AgentListView } />
+              <Route path="/file" component={ FileView } />
             </Switch>
             </div>
           </Router>

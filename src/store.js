@@ -5,12 +5,14 @@ import ConfigReducer from './config/reducers'
 import HomeReducer from './home/reducers'
 import DirectoryReducer from './directory/reducers'
 import AgentsReducer from './agents/reducers'
+import FileReducer from './file/reducers'
 
 const reducers = combineReducers({
     home: HomeReducer,
     config: ConfigReducer,
     directory: DirectoryReducer,
-    agents: AgentsReducer
+    agents: AgentsReducer,
+    file: FileReducer
 })
 
 const store = createStore(
