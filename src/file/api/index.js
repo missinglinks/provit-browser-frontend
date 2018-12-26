@@ -16,7 +16,7 @@ export function fetchProv (filepath) {
             .then(res => res.json())
             .then(json => {
                 console.log(json)
-                dispatch(fetchProvSuccess(json.prov))
+                dispatch(fetchProvSuccess(json.prov, json.agents))
                 return json.prov
             })
             .catch(error => dispatch(fetchProvError(error)))
