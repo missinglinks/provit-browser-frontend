@@ -124,10 +124,22 @@ class EventNetwork extends Component {
     renderProvDetails (uri) {
         const provDetails = document.getElementById("provDetails")
         const prov = this.provDict[uri]
+        console.log(prov)
         if (prov) {
-            provDetails.innerHTML = "<div>"+prov.uri+"</div>" +
-                                    "<div>"+prov.activity+"</div>" +
-                                    "<div>"+prov.activity_desc+"</div>"
+            provDetails.innerHTML = "<table class='prov-details'>" +
+                                    "<tr>" +
+                                    "<td> Uri</td><td>"+prov.uri+"</td>" +
+                                    "</tr>" +
+                                    "<tr>" +
+                                    "<td> Ended</td><td>"+prov.ended_at+"</td>" +
+                                    "</tr>" +
+                                    "<tr>" +
+                                    "<td>Agents</td><td>"+prov.agent +"</td>" +
+                                    "</tr>" +
+                                    "<tr>" +
+                                    "<td>Actvity</td><td>"+prov.activity_desc+"</td>" +
+                                    "</tr>" +
+                                    "</table"
         }
         else
             provDetails.innerHTML = ""

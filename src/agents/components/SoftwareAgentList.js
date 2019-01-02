@@ -55,7 +55,7 @@ class SoftwareAgentList extends Component {
                         />
                         </Grid>
                         <Grid item className={ classes.detailsBoxHeader }>
-                        <Typography variant="h6" >{ sw.name } - { sw.version }</Typography>
+                        <Typography variant="h6" >{ sw.name[0] } - { sw.version[0] }</Typography>
                         </Grid>
                     </Grid>
                     </ExpansionPanelSummary>
@@ -72,21 +72,21 @@ class SoftwareAgentList extends Component {
                                 <Typography gutterBottom>Name: </Typography>
                             </Grid>
                             <Grid item xs={11} className={ classes.detailsBox }>
-                                <Typography gutterBottom>{ sw.name }</Typography>
+                                <Typography gutterBottom>{ sw.name.map( (item, i) => <div>{item}<br /></div> ) }</Typography>
                             </Grid>
 
                             <Grid item xs={1} className={ classes.detailsBox }>
                                 <Typography gutterBottom>Version: </Typography>
                             </Grid>
                             <Grid item xs={11} className={ classes.detailsBox }>
-                                <Typography gutterBottom>{ sw.version }</Typography>
+                                <Typography gutterBottom>{ sw.version.map( (item, i) => <div>{item}<br /></div> ) }</Typography>
                             </Grid>
 
                             <Grid item xs={1} className={ classes.detailsBox }>
                                 <Typography gutterBottom>Website: </Typography>
                             </Grid>
                             <Grid item xs={11} className={ classes.detailsBox }>
-                                <Typography gutterBottom><a href={ sw.homepage } target="_blank"  rel="noopener noreferrer">{ sw.homepage }</a></Typography>
+                                <Typography gutterBottom>{ sw.homepage.map( (item, i) => <div><a href={item} target="_new"  rel="noopener noreferrer">{item}</a><br /></div> ) }</Typography>
                             </Grid>
 
                         </Grid>

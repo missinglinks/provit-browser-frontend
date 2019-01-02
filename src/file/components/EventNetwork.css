@@ -3,3 +3,8 @@
     border-color: purple;
     color: white;
   }
+
+  .prov-details td {
+    text-align: left; 
+    vertical-align: top;
+  }
