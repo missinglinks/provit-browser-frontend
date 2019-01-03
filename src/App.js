@@ -3,9 +3,12 @@ import { Provider } from 'react-redux'
 import store from './store'
 import './App.css'
 
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom'
 
 import Typography from '@material-ui/core/Typography'
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Button from '@material-ui/core/Button';
 
 import ConfigView from './config/container/ConfigView'
 import HomeView from './home/container/HomeView'
@@ -13,7 +16,11 @@ import DirectoryView from './directory/container/DirectoryView'
 import AgentListView from './agents/container/AgentListView'
 import FileView from './file/container/FileView'
 
+import Menu from './Menu'
+
 class App extends Component {
+
+
   render() {
     return (
       <Provider store={store}>
@@ -24,9 +31,8 @@ class App extends Component {
 
           <Router>
             <div>
-            <Link to={{ pathname: '/' }}>Home </Link>
-            <Link to={{ pathname: '/agents/' }}>Agents </Link>
-            <Link to={{ pathname: '/config/' }}>Config </Link>
+
+              <Menu />
 
             <Switch>
               <Route exact path="/" component={ HomeView } />
@@ -39,8 +45,8 @@ class App extends Component {
           </Router>
         </div>
       </Provider>
-    );
+    )
   }
 }
 
-export default App;
+export default App

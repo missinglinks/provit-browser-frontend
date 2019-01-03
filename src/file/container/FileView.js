@@ -3,9 +3,12 @@ import { connect } from 'react-redux'
 import * as actions from '../actions'
 import * as api from '../api'
 import Grid from '@material-ui/core/Grid'
+import { withStyles } from '@material-ui/core/styles'
+
 import EventNetwork from '../components/EventNetwork'
 import EventTimeline from '../components/EventTimeline'
 import EventDetails from '../components/EventDetails'
+
 
 const mapStateToProps = (state) => ({
     prov: state.file.prov,
@@ -19,6 +22,12 @@ const mapDispatchToProps = {
     fetchProv: api.fetchProv,
     changeProvEvent: actions.changeProvEvent
 }
+
+const styles = theme => ({
+    fileViewContainer: {
+        marginTop: 30
+    }
+})
 
 class FileView extends Component {
 
@@ -34,9 +43,9 @@ class FileView extends Component {
 
 
     render() {
-        const { currentFile } = this.props
+        const { classes, currentFile } = this.props
         return (
-            <div>
+            <div className={ classes.fileViewContainer } >
                 File
                 {currentFile || ""}
                 <Grid container>
@@ -55,4 +64,6 @@ class FileView extends Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FileView)
+const fileView = withStyles(styles) (FileView)
+
+export default connect(mapStateToProps, mapDispatchToProps)(fileView)
