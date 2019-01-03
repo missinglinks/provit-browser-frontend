@@ -17,7 +17,7 @@ export const changeCurrentFile = (currentFile) => ({
     payload: { currentFile }
 })
 
-export const changeProvEvent = (provEvent) => ({
+export const changeProvEvent = (currentProvEvent) => ({
     type: 'CHANGE_PROV_EVENT',
-    payload: { provEvent }
+    payload: { currentProvEvent }
 })

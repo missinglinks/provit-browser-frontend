@@ -2,6 +2,7 @@ const initalState = {
     prov: {},
     agents: [],
     currentFile: "",
+    currentProvEvent: "",
     loading: false,
     error: null
 }
@@ -14,6 +15,7 @@ const FileReducer = (state=initalState, action) => {
                 prov: {},
                 agent: [],
                 currentFile: "",
+                currentProvEvent: "",
                 loading: true,
                 error: null
             }
@@ -22,6 +24,7 @@ const FileReducer = (state=initalState, action) => {
                 ...state,
                 prov: action.payload.prov,
                 agent: action.payload.agents,
+                currentProvEvent: action.payload.prov.uri,
                 loading: false
             }
         case 'FETCH_PROV_ERROR':
@@ -34,6 +37,11 @@ const FileReducer = (state=initalState, action) => {
             return {
                 ...state,
                 currentFile: action.payload.currentFile
+            }
+        case 'CHANGE_PROV_EVENT':
+            return {
+                ...state,
+                currentProvEvent: action.payload.currentProvEvent
             }
         default:
             return state

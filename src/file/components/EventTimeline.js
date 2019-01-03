@@ -1,16 +1,10 @@
 import React, { Component } from 'react'
-import { Network, DataSet } from 'vis'
+import { Timeline, DataSet } from 'vis'
 import { withStyles } from '@material-ui/core/styles'
 // throws error if css is missing
 import 'vis/dist/vis-timeline-graph2d.min.css'
+
 const styles = theme => ({
-    networkContainer: {
-      width: '100%',
-      height: 600
-    },
-    eventNetworkContainer: {
-        marginTop: theme.spacing.unit * 8, 
-    },
     eventTimelineContainer: {
         width: '100%',
         height: 280
@@ -26,38 +20,26 @@ const generateLabel = (event) => {
     const fileName = getFilename(location)
     const activitySplit = activity.split("/")
     const activitySlug = activitySplit[activitySplit.length - 2]
-    console.log(fileName)
-    return fileName + " [" + activitySlug + "]"
+    return activitySlug
 }
 
-  var options = {
-    layout: {
-      hierarchical: {
-        sortMethod: "directed"
-      }
-    },
-    edges: {
-      smooth: true,
-      arrows: {to : true }
-    }
-  }
-   
-class EventNetwork extends Component {
 
-    flatProvData (data) {
-        this.provDict[data.uri] = data
-        for (const source of data.sources) {
-            this.flatProvData(source)
-        }
+class EventTimeline extends Component {
+
+    constructor (props) {
+        super(props)
+        this.nodes = new DataSet()
     }
+
 
     iterProvData (root) {
+
         const currentNodes = this.nodes.getIds()
         const source = root.uri
     
         if (!currentNodes.includes(source)) {
             currentNodes.push(source)
-            this.nodes.add({
+            this.nodes.update({
                 id: source,
                 label: generateLabel(root),
                 group: getFilename(root.location),
@@ -66,8 +48,7 @@ class EventNetwork extends Component {
             })
     
         }
-    
-    
+        
         if (root.sources) {
             for (const source_data of root.sources) {
                 const target = source_data.uri
@@ -75,7 +56,7 @@ class EventNetwork extends Component {
                 if (!currentNodes.includes(target)) {
     
                     currentNodes.push(target)
-                    this.nodes.add({
+                    this.nodes.update({
                         id: target,
                         label: generateLabel(source_data),
                         group: getFilename(source_data.location),
@@ -83,12 +64,7 @@ class EventNetwork extends Component {
                         content: generateLabel(source_data),
                     })
                 }
-    
-                this.edges.add({
-                    from: source,
-                    to: target,
-                    arrows: 'from'
-                })
+
             }
             for (const source_data of root.sources) {
                 this.iterProvData(source_data)
@@ -96,48 +72,62 @@ class EventNetwork extends Component {
         }     
     }
 
-    buildEdgeList (prov) {
-        this.iterProvData(prov)
-    }
-
-
-    constructor (props) {
-        super(props)
-        this.nodes = new DataSet()
-        this.edges = new DataSet()
-    }
 
     componentDidMount () {
 
-        this.network = new Network(this.refs.eventNetwork, { nodes: this.nodes, edges: this.edges}, options)
-        this.network.on("click", (event) => {
-            const item = this.network.getNodeAt(event.pointer.DOM)
-            console.log(item)
+        const options = {
+            verticalScroll: true,
+            maxHeight: 250
+        }
+
+        this.timeline = new Timeline(this.refs.eventTimeline, this.nodes, options)
+        this.timeline.on("click", (event) => {
+            const item = event.item           
             this.props.changeProvEvent(item)
-        })
+            this.timeline.on("click", (event) => {
+                const item = event.item            
+                this.props.changeProvEvent(item)
+            })               
+        })          
     }
 
     componentDidUpdate () {
         const { prov, currentProvEvent } = this.props
-        if (! (Object.keys(prov).length === 0 && prov.constructor === Object) )
-            this.buildEdgeList(prov)
+        if (! (Object.keys(prov).length === 0 && prov.constructor === Object) ) {
+            this.iterProvData(prov)
 
-        console.log(currentProvEvent)
-        if (currentProvEvent !== "" && currentProvEvent)
-            this.network.selectNodes( [currentProvEvent] )
+            const allGroups = this.nodes.map( (node,i ) => node.group )
+            const group = []
+            const done = []
+            for (const i in allGroups) {
+                if (done.indexOf(allGroups[i]) < 0) {
+                    group.push({
+                        id: allGroups[i], 
+                        content: allGroups[i] 
+                    })
+                    done.push(allGroups[i])
+                }
+            }
+            this.timeline.setGroups(group)
+
+            this.timeline.fit()       
+        }
+        if (currentProvEvent)
+            this.timeline.setSelection(currentProvEvent)  
         else
-            this.network.selectNodes( [] )            
-
+            this.timeline.setSelection("")
     }
+
 
     render () {
         const { classes } = this.props
         return (
             <div>
-                <div className={ classes.networkContainer } ref="eventNetwork"></div>  
+                <div className={ classes.eventTimelineContainer } ref="eventTimeline"></div>  
             </div>
         )
     }
+
 }
 
-export default withStyles(styles) (EventNetwork)
+export default withStyles(styles) (EventTimeline)
