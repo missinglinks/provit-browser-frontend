@@ -3,6 +3,7 @@ import { Timeline, DataSet } from 'vis'
 import { withStyles } from '@material-ui/core/styles'
 // throws error if css is missing
 import 'vis/dist/vis-timeline-graph2d.min.css'
+import './EventTimeline.css'
 
 const styles = theme => ({
     eventTimelineContainer: {

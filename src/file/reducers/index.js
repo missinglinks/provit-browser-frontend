@@ -4,7 +4,8 @@ const initalState = {
     currentFile: "",
     currentProvEvent: "",
     loading: false,
-    error: null
+    error: null,
+    updateNetwork: false
 }
 
 const FileReducer = (state=initalState, action) => {
@@ -25,7 +26,8 @@ const FileReducer = (state=initalState, action) => {
                 prov: action.payload.prov,
                 agent: action.payload.agents,
                 currentProvEvent: action.payload.prov.uri,
-                loading: false
+                loading: false,
+                updateNetwork: true
             }
         case 'FETCH_PROV_ERROR':
             return {
@@ -42,6 +44,11 @@ const FileReducer = (state=initalState, action) => {
             return {
                 ...state,
                 currentProvEvent: action.payload.currentProvEvent
+            }
+        case 'NETWORK_UPDATED':
+            return {
+                ...state,
+                updateNetwork: false
             }
         default:
             return state

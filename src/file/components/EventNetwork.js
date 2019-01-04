@@ -30,17 +30,15 @@ const generateLabel = (event) => {
     return fileName + " [" + activitySlug + "]"
 }
 
-  var options = {
+var options = {
     layout: {
-      hierarchical: {
-        sortMethod: "directed"
-      }
+
     },
     edges: {
-      smooth: true,
-      arrows: {to : true }
+        smooth: true,
+        arrows: {to : true }
     }
-  }
+}
    
 class EventNetwork extends Component {
 
@@ -57,7 +55,7 @@ class EventNetwork extends Component {
     
         if (!currentNodes.includes(source)) {
             currentNodes.push(source)
-            this.nodes.add({
+            this.nodes.update({
                 id: source,
                 label: generateLabel(root),
                 group: getFilename(root.location),
@@ -75,7 +73,7 @@ class EventNetwork extends Component {
                 if (!currentNodes.includes(target)) {
     
                     currentNodes.push(target)
-                    this.nodes.add({
+                    this.nodes.update({
                         id: target,
                         label: generateLabel(source_data),
                         group: getFilename(source_data.location),
@@ -84,7 +82,7 @@ class EventNetwork extends Component {
                     })
                 }
     
-                this.edges.add({
+                this.edges.update({
                     from: source,
                     to: target,
                     arrows: 'from'
@@ -118,9 +116,11 @@ class EventNetwork extends Component {
     }
 
     componentDidUpdate () {
-        const { prov, currentProvEvent } = this.props
-        if (! (Object.keys(prov).length === 0 && prov.constructor === Object) )
+        const { prov, currentProvEvent, updateNetwork, networkUpdated } = this.props
+        if (! (Object.keys(prov).length === 0 && prov.constructor === Object) && updateNetwork) {
             this.buildEdgeList(prov)
+            networkUpdated()
+        }
 
         console.log(currentProvEvent)
         if (currentProvEvent !== "" && currentProvEvent)

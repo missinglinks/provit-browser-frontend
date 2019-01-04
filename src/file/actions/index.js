@@ -21,3 +21,7 @@ export const changeProvEvent = (currentProvEvent) => ({
     type: 'CHANGE_PROV_EVENT',
     payload: { currentProvEvent }
 })
+
+export const networkUpdated = () => ({
+    type: 'NETWORK_UPDATED'
+})
